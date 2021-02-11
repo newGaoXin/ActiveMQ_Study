@@ -6,9 +6,9 @@ import javax.jms.*;
 
 public class JmsProduce {
 
-//    public static final String DEFAULT_BROKER_BIND_URL = "tcp://120.27.111.97:61616";
-    public static final String DEFAULT_BROKER_BIND_URL = "tcp://localhost:61616";
-    public static final String QUEUE_NAME = "queue01";
+//    public static final String DEFAULT_BROKER_BIND_URL = "nio://120.27.111.97:61618";
+public static final String DEFAULT_BROKER_BIND_URL = "failover:(tcp://120.27.111.97:61616,tcp://120.27.111.97:61617,tcp://120.27.111.97:61618)";
+    public static final String QUEUE_NAME = "test_cluster";
 
     public static void main(String[] args) throws JMSException {
 
@@ -25,7 +25,7 @@ public class JmsProduce {
         // 5.创建消息的生产者
         MessageProducer messageProducer = session.createProducer(queue);
         // 持久化设置
-//        messageProducer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);   // 非持久化
+        messageProducer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);   // 非持久化
 //        messageProducer.setDeliveryMode(DeliveryMode.PERSISTENT);   // 持久化
         // 6.通过使用messageProducer生产3条消息发送到MQ的队列里面
         for (int i = 1; i <= 3; i++) {
